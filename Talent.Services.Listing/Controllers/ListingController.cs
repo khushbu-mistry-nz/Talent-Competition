@@ -169,6 +169,7 @@ namespace Talent.Services.Listing.Controllers
         {
             try
             {
+                
                 employerId = employerId == null ? _userAppContext.CurrentUserId : employerId;
                 var sortedJobs = (await _jobService.GetEmployerJobsAsync(employerId));
 
@@ -177,7 +178,7 @@ namespace Talent.Services.Listing.Controllers
                     sortedJobs = sortedJobs.Where(x => x.Status != JobStatus.Active);
                 }
 
-                if(!showClosed)
+                if (!showClosed)
                 {
                     sortedJobs = sortedJobs.Where(x => x.Status != JobStatus.Closed);
                 }
@@ -209,7 +210,11 @@ namespace Talent.Services.Listing.Controllers
                 {
                     var returnJobs = sortedJobs.OrderBy(x => x.CreatedOn).Skip((activePage - 1) * limit).Take(limit)
                         .Select(x => new { x.Id, x.Title, x.Summary, x.JobDetails.Location, x.ExpiryDate, x.Status, noOfSuggestions = x.TalentSuggestions != null && x.TalentSuggestions.Count != 0 ? x.TalentSuggestions.Count : 0 });
+                 
+                    //var returnJobs = sortedJobs.Select(x => new { x.Id, x.Title, x.Summary, x.JobDetails.Location, x.ExpiryDate, x.Status,
+                      // noOfSuggestions = x.TalentSuggestions != null && x.TalentSuggestions.Count != 0 ? x.TalentSuggestions.Count : 0 });
                     return Json(new { Success = true, MyJobs = returnJobs, TotalCount = sortedJobs.Count() });
+
                 }                
             }
             catch
@@ -217,6 +222,7 @@ namespace Talent.Services.Listing.Controllers
                 return Json(new { Success = false, Message = "Error while retriving Jobs" });
             }
         }
+
         [HttpPost("closeJob")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "employer, recruiter")]
         public async Task<IActionResult> CloseJob([FromBody]string id)
