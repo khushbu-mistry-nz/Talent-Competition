@@ -11,7 +11,8 @@ export class CloseJob extends React.Component {
     selectJob() {
         var cookies = Cookies.get('talentAuthToken');
         $.ajax({
-            url: 'http://localhost:51689/listing/listing/closeJob',
+            // url: 'http://localhost:51689/listing/listing/closeJob',
+            url: 'https://talentservicestalent20210820232613.azurewebsites.net/listing/listing/closeJob',
             headers: {
                 'Authorization': 'Bearer ' + cookies,
                 'Content-Type': 'application/json'

@@ -66,7 +66,8 @@ export default class ManageJob extends React.Component {
         var cookies = Cookies.get('talentAuthToken');
         var page = currentpage != undefined ? currentpage : this.state.activePage;
         $.ajax({
-            url: 'http://localhost:51689/listing/listing/getSortedEmployerJobs' +
+            // url: 'http://localhost:51689/listing/listing/getSortedEmployerJobs' +
+            url: 'https://talentservicestalent20210820232613.azurewebsites.net/listing/listing/getSortedEmployerJobs' + 
                 '?activePage=' + page +
                 '&sortbyDate=' + this.state.sortBy.date +
                 '&showActive=' + this.state.filter.showActive +
